@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        
+        int n = nums.size(),ansindex=0,anss=1;;
+        sort(nums.begin(),nums.end());
+        vector<int> ans;
+        vector<int> dp(n,1),hash(n);
+        
+        for(int i=1;i<n;i++){
+             hash[i] = i;
+            for(int j=0;j<i;j++){
+
+                if(nums[i]%nums[j] == 0 and dp[i]<dp[j]+1){
+                    dp[i] = dp[j]+1;
+                    hash[i] = j;
+                }
+
+            }
+            if(dp[i]>anss){
+                anss = dp[i];
+                ansindex = i;
+            }
+        }
+       
+        while(hash[ansindex]!=ansindex){
+            ans.push_back(nums[ansindex]);
+            ansindex = hash[ansindex];
+        }
+            ans.push_back(nums[ansindex]);
+
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};

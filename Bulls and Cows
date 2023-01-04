@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        
+        map<char,int> mp;
+        for(auto i : guess)
+        mp[i]++;
+        int b=0,c=0;
+
+        for(int i=0;i<secret.size();i++){
+
+            if(secret[i] == guess[i]){
+                b++;
+                mp[guess[i]]--;
+            }
+        }
+        
+        
+        for(int i=0;i<secret.size();i++){
+
+            if(secret[i] != guess[i] and mp.find(secret[i])!=mp.end() and mp[secret[i]]!=0){
+                c++;
+                mp[secret[i]]--;
+
+            }
+
+        }
+        return to_string(b)+"A"+to_string(c)+"B";
+    }
+};
